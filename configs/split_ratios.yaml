@@ -1,0 +1,32 @@
+# Dataset-size-dependent train/validation/test split ratios.
+# These match the manuscript description.
+
+rules:
+  - name: "small"
+    max_molecules: 1000
+    train: 3
+    valid: 1
+    test: 1
+    folds: 5
+
+  - name: "medium"
+    min_molecules_exclusive: 1000
+    max_molecules: 3000
+    train: 5
+    valid: 1
+    test: 1
+    folds: 7
+
+  - name: "large"
+    min_molecules_exclusive: 3000
+    train: 8
+    valid: 1
+    test: 1
+    folds: 10
+
+single_split_methods:
+  datasail:
+    use_size_dependent_ratios: true
+  lohi:
+    use_size_dependent_ratios: true
+    similarity_threshold: 0.4
