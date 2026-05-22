@@ -1,0 +1,16 @@
+name: empty-scaffold-allocation
+channels:
+  - conda-forge
+  - defaults
+
+dependencies:
+  - python=3.10
+  - pip
+  - numpy
+  - pandas
+  - scipy
+  - scikit-learn
+  - rdkit
+  - openpyxl
+  - umap-learn
+  - tqdm
