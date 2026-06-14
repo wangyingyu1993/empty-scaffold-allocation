@@ -1,0 +1,24 @@
+name: empty-scaffold
+channels:
+  - conda-forge
+dependencies:
+  - python=3.9
+  - rdkit
+  - numpy=1.26.*
+  - pandas=2.2.*
+  - scipy=1.11.*
+  - scikit-learn=1.4.*
+  - xgboost=2.*
+  - pyyaml
+  - tabulate
+  - pytest
+  - matplotlib
+  - openpyxl
+  - jupyterlab
+  - ipykernel
+  - pip
+  - pip:
+      - umap-learn
+      - tensorflow
+      # Optional for regenerating DataSAIL-based full splits:
+      # - datasail==1.2.3

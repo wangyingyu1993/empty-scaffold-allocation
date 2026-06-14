@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "empty-scaffold-allocation-bias"
+version = "0.2.0"
+description = "Scaffold/no-scaffold diagnostics, ESA split repair utilities, and metric analyses for molecular distribution-shift evaluation."
+requires-python = ">=3.9"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

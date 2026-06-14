@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Local IDE files
+.idea/
+.vscode/
+
+# Generated outputs and large local data
+outputs/*
+!outputs/README.md
+results/
+data/processed/
+data/raw/
+data/splits/
+data/predictions/
+
+# Environment files
+.env
+.venv/
+venv/

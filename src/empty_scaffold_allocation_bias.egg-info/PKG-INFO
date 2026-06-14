@@ -1,0 +1,7 @@
+Metadata-Version: 2.4
+Name: empty-scaffold-allocation-bias
+Version: 0.2.0
+Summary: Scaffold/no-scaffold diagnostics, ESA split repair utilities, and metric analyses for molecular distribution-shift evaluation.
+Requires-Python: >=3.9
+License-File: LICENSE
+Dynamic: license-file

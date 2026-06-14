@@ -1,0 +1,77 @@
+# Dataset configuration for empty-scaffold allocation analyses.
+# Paths assume the full Zenodo data archive has been extracted under data/.
+
+raw_data:
+  moleculenet:
+    source: "https://moleculenet.org/datasets-1"
+    local_dir: "data/raw/moleculenet"
+  deeppk_admet:
+    source: "https://biosig.lab.uq.edu.au/deeppk/data"
+    local_dir: "data/raw/admet"
+
+processing:
+  smiles_column: "molecules"
+  parser: "RDKit"
+  standardization: "canonical SMILES"
+  invalid_smiles: "exclude from scaffold-based analyses"
+  duplicate_handling: "resolve based on canonical SMILES when molecule-level de-duplication is required"
+
+processed_data:
+  root: "data/processed"
+  no_scaffold_min_proportion: 0.08
+  directories:
+    moleculenet_classification: "data/processed/moleculenet/classification"
+    moleculenet_regression: "data/processed/moleculenet/regression"
+    admet_classification: "data/processed/admet/classification"
+    admet_regression: "data/processed/admet/regression"
+
+splits:
+  scaffold: "data/splits/scaffold"
+  umap: "data/splits/umap"
+  datasail: "data/splits/datasail"
+  lohi: "data/splits/lohi"
+  esa: "data/splits/esa"
+
+predictions:
+  root: "data/predictions"
+  models:
+    - chemberta3
+    - dmpnn
+    - fcnn_character
+    - fcnn_fingerprint
+    - molclr
+    - xgboost_character
+    - xgboost_fingerprint
+
+columns:
+  smiles: "molecules"
+  task_columns: "dataset-specific; all non-SMILES target columns are treated as task columns unless specified by a script argument"
+
+benchmarks:
+  moleculenet:
+    display_name: "MoleculeNet"
+    prediction_groups:
+      classification: []
+      regression: []
+  admet:
+    display_name: "ADMET"
+    prediction_groups:
+      classification: []
+      regression: []
+
+demo_cases:
+  raw_datasail_splits:
+    root: "data/demo/datasail_esa_cases/raw_datasail_splits"
+    datasets:
+      ames:
+        benchmark: "admet"
+        task_group: "classification"
+        target_columns: ["ames"]
+      esol:
+        benchmark: "moleculenet"
+        task_group: "regression"
+        target_columns: ["measured log solubility in mols per litre"]
+      pkb:
+        benchmark: "admet"
+        task_group: "regression"
+        target_columns: ["pkb"]
