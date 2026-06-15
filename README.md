@@ -15,6 +15,8 @@ pip install -e .
 pytest -q
 ```
 
+Typical install time on a normal desktop computer is approximately 5–10 minutes, depending on network speed and package download time.
+
 ## Notebooks
 
 Run notebooks from the repository root:
@@ -27,6 +29,8 @@ jupyter lab notebooks/04_datasail_esa_repair_audit.ipynb
 ```
 
 The notebooks use bundled demo data and write results under `outputs/`.
+
+Expected run time for the bundled demo notebooks is approximately 1–5 minutes per notebook on a normal desktop computer. Full-data analyses require the Zenodo data package and take longer.
 
 ## Demo data
 

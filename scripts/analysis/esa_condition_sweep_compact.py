@@ -132,7 +132,7 @@ def make_fingerprint(smiles: str):
     if mol is None:
         return None
     try:
-        return AllChem.GetMorganFingerprintAsBitVect(mol, FP_RADIUS, nBits=FP_NBITS)
+        return AllChem.GetMorganFingerprintAsBitVect(mol, FP_RADIUS, nBits=FP_NBITS, useChirality=True)
     except Exception:
         return None
 

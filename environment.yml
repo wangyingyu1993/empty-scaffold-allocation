@@ -12,13 +12,14 @@ dependencies:
   - pyyaml
   - tabulate
   - pytest
-  - matplotlib
+  - matplotlib=3.8.*
   - openpyxl
   - jupyterlab
-  - ipykernel
+  - notebook
+  - ipykernel=6.29.*
+  - jupyter_client=8.6.*
+  - pyzmq=26.*
+  - tornado=6.4.*
   - pip
   - pip:
       - umap-learn
-      - tensorflow
-      # Optional for regenerating DataSAIL-based full splits:
-      # - datasail==1.2.3

@@ -62,7 +62,7 @@ def morgan_fp_array(smiles: str, radius: int = 2, n_bits: int = 1024) -> Optiona
     if mol is None:
         return None
     try:
-        fp = AllChem.GetMorganFingerprintAsBitVect(mol, radius, nBits=n_bits)
+        fp = AllChem.GetMorganFingerprintAsBitVect(mol, radius, nBits=n_bits, useChirality=True)
         return np.asarray(fp, dtype=np.float32)
     except Exception:
         return None
@@ -83,7 +83,7 @@ def morgan_fp_bitvect(smiles: str, radius: int = 2, n_bits: int = 2048):
     if mol is None:
         return None
     try:
-        return AllChem.GetMorganFingerprintAsBitVect(mol, radius, nBits=n_bits)
+        return AllChem.GetMorganFingerprintAsBitVect(mol, radius, nBits=n_bits, useChirality=True)
     except Exception:
         return None
 

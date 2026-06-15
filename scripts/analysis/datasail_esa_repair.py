@@ -5,8 +5,10 @@
 The script builds a DataSAIL-derived scaffold-bearing backbone using DataSAIL
 with the SCIP solver, collects no-scaffold molecules separately, partitions them
 into local micro-clusters, and assigns those micro-clusters to train/valid/test/drop
-with the coupled greedy ESA procedure.  Each (condition, dataset) task is executed
-in an isolated subprocess so one failure does not stop the batch.
+with the coupled greedy ESA procedure. DataSAIL is required for scaffold-bearing
+molecules; no scaffold-group fallback is used for manuscript analyses. Each
+(condition, dataset) task is executed in an isolated subprocess so one failure
+does not stop the batch.
 
 Outputs
 -------
@@ -38,8 +40,13 @@ from rdkit import Chem, DataStructs, rdBase
 from rdkit.Chem import AllChem
 from rdkit.Chem.Scaffolds import MurckoScaffold
 from rdkit.SimDivFilters.rdSimDivPickers import LeaderPicker
-from datasail.sail import datasail
 
+try:
+    from datasail.sail import datasail
+    DATASAIL_IMPORT_ERROR = None
+except Exception as exc:
+    datasail = None
+    DATASAIL_IMPORT_ERROR = exc
 
 rdBase.BlockLogs()
 
@@ -220,7 +227,7 @@ def print_failed_rows(rows: List[Dict]) -> None:
         print("  ".join(str(row.get(c, "")).ljust(widths[c]) for c in cols))
 
 # =========================
-# # Scaffold-bearing split via DataSAIL only
+# Scaffold-bearing split via DataSAIL only
 # =========================
 def extract_datasail_assignment(e_splits) -> Dict[str, str]:
     if isinstance(e_splits, dict):
@@ -231,17 +238,25 @@ def extract_datasail_assignment(e_splits) -> Dict[str, str]:
             return first_val
     raise ValueError(f"Cannot parse DataSAIL return value: {type(e_splits)} -> {e_splits}")
 
+
 def datasail_split_scaffold_bearing(
     df_scaffold: pd.DataFrame,
     weights: List[int],
     ratios: Tuple[float, float, float],
 ) -> Tuple[Dict[str, str], str]:
+    """Split scaffold-bearing molecules with DataSAIL.
+
+    The ``ratios`` argument is kept for API compatibility with earlier versions of
+    this script. It is not used here because no scaffold-group fallback is allowed
+    in the manuscript analysis workflow.
+    """
     if len(df_scaffold) == 0:
         return {}, "no_scaffold_only"
 
     if datasail is None:
         raise ImportError(
-            "DataSAIL is required for scaffold-bearing split generation"
+            "DataSAIL is required for scaffold-bearing split generation; "
+            f"no scaffold-group fallback is used. Original import error: {DATASAIL_IMPORT_ERROR}"
         )
 
     df_sail = df_scaffold[["ID", "SMILES_norm"]].copy()
@@ -262,8 +277,10 @@ def datasail_split_scaffold_bearing(
 
     except Exception as e:
         raise RuntimeError(
-            "DataSAIL failed on the scaffold-bearing subset"
+            "DataSAIL failed on the scaffold-bearing subset; "
+            "no scaffold-group fallback is used for manuscript analyses."
         ) from e
+
 
 # =========================
 # ESA micro-clusters for no-scaffold molecules

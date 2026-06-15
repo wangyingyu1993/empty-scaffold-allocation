@@ -93,7 +93,7 @@ def smiles_to_fp(smiles: str, radius: int = ESA_FP_RADIUS, n_bits: int = ESA_FP_
     if mol is None:
         return None
     try:
-        return AllChem.GetMorganFingerprintAsBitVect(mol, radius=radius, nBits=n_bits)
+        return AllChem.GetMorganFingerprintAsBitVect(mol, radius=radius, nBits=n_bits, useChirality=True)
     except Exception:
         return None
 
